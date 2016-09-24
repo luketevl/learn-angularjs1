@@ -1,0 +1,181 @@
+<html>
+	<head>
+	<title>Hello AngularJS</title>
+	<script src="framework/angular.js" type="text/javascript"></script>
+	<script>
+		// Cria MODULO
+		angular.module("hello-angular", []);
+
+		// Localiza um MODULO
+		angular.module("hello-angular").controller("hello-angularController", function($scope){
+			$scope.msg = "Hello Angular";
+		});
+	</script>
+	</head>
+	<!-- DIRETIVA
+		* EXTENSÃO do HTML
+	-->
+	<body ng-app="hello-angular">
+		<div ng-controller="hello-angularController">
+		<!--INTERPOLAÇÃO {{X}} -->
+			{msg}
+		</div>
+	</body>
+</html>
+
+
+
+
+<!--
+============================== CONHECENDO ==============================
+	- DIRETIVAS
+		* Extensão do HTML, (ATRIBUTOS)
+		* ng-app (Fronteiras da aplicação), delimita onde ANGULARJS vai trabalhar
+		* ng-controller (Vinculo entre VIEW e CONTROLLER)
+		* ng-bind (Exibir resultado de uma expressão, $SCOPE), igual INTERPOLAÇÃO {{}}
+		* ng-repeat (Interação entre Coleções e Objetos)
+			= ng-repeat= "contato in contatos"
+				* ng-repeat="(chave, valor) in contato"
+			= track by $index ( AJUDA NA PERFORMANCE, REDEFINE APENAS AQUELE QUE MUDOU)
+		* ng-model (Inverso da INTERPOLAÇÃO, ng-bind), pega algo da VIEW e DEFINE no $SCOPE
+		* ng-click (Comportamento em EVENTO)
+		* ng-disabled (Desabilitar ELEMENTO), BOOLEAN
+		* ng-show (MOSTRA ELEMENTO), BOOLEAN elemento ainda existe! APENAS NA VISIBILIDADE
+		* ng-hide (ESCONDE ELEMENTO), BOOLEAN elemento ainda existe! APENAS NA VISIBILIDADE
+		* ng-if (DESTROI/CONSTROI ELEMENTO), BOOLEAN elemento CRIADO no DOM! MEXE COM DOM
+		* ng-include (Incluir colocar ASPAS)
+			* ng-include="'pag.html'"
+		* ng-options (Renderizar SELECT)
+			= ng-repeat="objeto.chave for objeto in objetos"
+			= ng-repeat="objeto.value as objeto.chave for objeto in objetos"
+			= ng-repeat="objeto.value as objeto.chave group by objeto.chave2 for objeto in objetos"
+		* ng-class (Atribui ESTILOS)
+			= ng-class="classe"
+			= ng-class="[classe, classe 2]"
+			= ng-class="{selecionado:  contato.selecionado}"
+			= ng-class="{'selecionado negrito':  contato.selecionado}"
+		* ng-style (Atribui ESTILOS)
+			* ng-style="{selecionado:  contato.selecionado}"
+		* ng-required (Validação formulário, usar tag <FORM>), BOOLEAN
+		* ng-minlength
+		* ng-maxlength
+		* ng-pattern (Validação com expressão regular)
+		* ng-messages (MODULO | Chamar js e declarar [])
+			= ng-message
+		* ng-view (Template da ROTA acessada)
+		* ng-src (IMPEDE QUE O NAVEGADOR CARREGA A IMAGEM MESMO QUANDO NÃO DEVERIA)
+		* CRIANDO DIRETIVAS .directive
+		 	= template 'inserir html'
+			= templateUrl 'inserir arquivo html'
+			= replace 'remove o elemento da directive'
+			= restrict 'restringir modo de utilizacao' A -> Atributo, E -> Elemento, C-> CLASSE, M -> Comentário | Pode combinar atributos
+			= scope {} 'cria um scopo isolado para a directive'
+				= Passar parametros
+					= @ 'PREFIXAR direto'
+					= = 'PREFIXAR com data binding'
+			= transclude 'Encapsular conteudo', ERDA TODAS AS PROPRIEDADES mesmo sendo outro escopo
+				= inserir ng-transclude 'Definir onde vai aparecer'
+			= require: "ngModel" - 'Acessa API'
+				= ^uiAccordions , 'Prefixando, pegando elemento pai'
+			= link: function(scope, element, attrs, require, controller){} 'Executada DEPOIS do te pleate compilado, USADA para interarir com a DOM'
+			= controller: = 'Definir uma API, compartilhar com outroas directives'
+				= é uma função construtora, acessando pelo this
+
+	- OBJETOS DE VALIDAÇÃO
+		* $valid and $invalid (CONSULTAR VALIDADE DE CAMPO, FORM)
+		* $pristine (CONSULTAR CAMPO NUNCA FOI TOCADO DO FORM)
+		* $dirty (CONSULTAR CAMPO FOI TOCADO DO FORM)
+		* $setPrintine() (Volta campos virgens)
+		* $error (Consulta erro em formulario ou campo)
+
+	- CICLO NOTIFICAÇÃO
+		* TWO WAY DATA BINDING
+			= Quando compilado, fica ESCUTANDO os ng-model e avisa as DIRETIVAS
+
+
+	- FILTROS
+		* Transformam dados, nem sempre filtram
+		* Criar filtros .filter(nome, function(){ return function(){ return }});
+		* Ordem Pode afetar
+		* Para suar no CONTROLLER deve importar o $filter
+		* uppercase (Utiliza PIPE | )
+			= {{contato.nome | uppercase}}
+		* lowercase (Utiliza PIPE | )
+			= {{contato.nome | lowercase}}
+		* date (Formata data)
+			= {{contato.data | date: 'dd/MM/yyyy'}}
+		* filter (Filtra dados)
+			= ng-repeat="x in xs | filter: {nome: elementoBusca}"
+		* orderBy (Ordena dados, usar no ng-repeat)
+			= | orderBy:'campo'
+			= | orderBy:'+campo'
+			= | orderBy:'-campo'
+			= | orderBy:'-campo' : true , PADRAMETRO QUE INVERTE
+		* currency (Converter números para moeda)
+			= | currency
+		* number
+			= | number:2
+		* limitTo (Limit array ous string)
+			= | limitTo: 2
+
+- SERVIÇOS
+	* REUTILIZAÇÃO DO CÓDIGO, ORGANIZAÇÃO
+	* $http (Requisições XMLHttpRequest ou JSONP), Importar SERVICO []
+		= get(url, config)
+		= post(url, ,data, config)
+		= put(url, ,data, config)
+		= delete(url, config)
+		= head(url, config)
+		= jsonp(url, config)
+	* Modo de criar FUNCAO FABRICA .factory
+	* Modo de criar FUNCAO CONSTRUTORA .service
+	* Criar CONSTANTES .value ou .constant (usado para provider)
+	* Criar SERVICOS PERSONALIZADOS .provider
+
+	- ORGANIZAÇÃO DO PROJETO
+		* INLINE (Tudo no mesmo arquivo)
+		* STEREOTYPED STYLE ( Componentes do mesmo tipo juntos) css, js(diretivas, controllers filters), lib, view
+		* SPECIFIC STYLE (Um arquivo para cada componenetes)
+		* DOMAIN STYLE (Arquivos por dominio)
+
+	- MODULO
+	 * COLEÇÃO DE COMPONENTES
+	 * CRIAR MODULO, IMPORTAR arquivo  e chamar ele no modulo que for usa-lo.
+	 * Gaurdar referencia ou sempre localizar
+	 * angular.module('meuModulo', []) 'CRIA MODULO'
+	 * angular.module('meuModulo') 'LOCALIZA MODULO'
+	 * INICIAR MODULO
+	 	= angular.mobule('nome').run(function($templateCache){ $templateCache.put('Nome', 'valor');};);
+	 * ngRoute ROTAS
+	 	= DECLARAR sua utilização
+		= $routeProvider.when('/contatos',{  - 'Para ONDE VOU'
+				templateUrl: 'view/contatos.html',
+				controller: 'nomeController',
+				resolve:{ - 'Resolver DEPENDENCIAS, CONDICAO DE ENTRADAS, só entra se promessas forem TRUE'
+
+				}
+			});
+		= $routeProvider.otherwise({redirectTo: '/rotaPadrao'});  - 'DEFINE COMPORTAMENTO QUANDO NAO ACHA A ROTA'
+
+	- OBJETOS
+		* $location.path('/rota'); - 'Vai para uma rota'
+
+
+	- OBSERVAÇÕES
+		* EVITAR ler $SCOPE DENTRO DO CONTROLLER
+		* SEMPRE TENTAR, ao definir uma ENTIDADE, ABSTRAÇÃO
+			= cuidado com CICLOS usar angular.copy() ou delete $scope
+		* SABER qual ESCOPO {{$id}}
+		* Directive, opcao SCOPE caso nome seja igual colocar apenas @ exemplo title: "@title"
+		* Ler $compile no DOC do ANGULAR
+		* Ler angular.element no DOC do ANGULAR
+		* Ler ngModel no DOC do ANGULAR
+		* MODULOS ganha performance
+		* MODULOS isolamento
+		* Nao referenciar MODULO com variavel global, usar sempre modo de LOCALIZAR
+		* QUANDO TIVER layout usar $templateCache
+		* Ler $templateCache no DOC do ANGULAR
+		* Errar ROTA nao vai mostrar nada, define uma rota padrao
+		* RESOLVE colocar o nome do parametro la no controoler que vai usar e colocar no escopo parametro.data
+
+-->
