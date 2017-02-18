@@ -1,0 +1,17 @@
+<h1>{{foto.titulo}}</h1>
+<form ng-submit="new()">
+  <div class="form-group">
+    <label for="titulo">Titulo</label>
+    <input type="text" class="form-control" ng-model="foto.titulo" placeholder="Email" name="titulo">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">URL</label>
+    <input type="url" class="form-control" ng-model="foto.url" placeholder="Password" name="url">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">descricao</label>
+    <input type="text" class="form-control" ng-model="foto.descricao" placeholder="Password" name="descricao">
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+  <minha-foto url="{{foto.url}}" titulo="{{foto.tiulo}}"></minha-foto>
+</form>

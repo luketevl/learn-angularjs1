@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">AngularJS</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <form>
+          <a href="fotos/new" type="button" class="btn btn-default" aria-label="Left Align">
+          <span class="glyphicon glyphicon-align-left" aria-hidden="true">Novo</span>
+        </a>
+          <input class="form-control" placeholder="Buscar" ng-model-options="{debounce: 2000}" ng-model="filtro" />
+        </form>
+    </div>
+  </div>
+  <div class="row">
+    <my-panel class="col-md-2" ng-repeat="foto in fotos | filter: filtro" titulo="{{foto.titulo}}">
+      <minha-foto url="{{foto.url}}" titulo="{{foto.titulo}}"></minha-foto>
+    </my-panel>
+  </div>
+</div> <!-- fim container -->

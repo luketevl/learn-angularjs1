@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="app">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Alurapic</title>
+        <base href="/">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+        <!-- IMPORTANDO O ANGULARJS -->
+        <script src="js/lib/angular.min.js"></script>
+
+        <!-- IMPORTANDO OS MODULOS -->
+        <script src="js/lib/angular-animate.min.js"></script>
+        <script src="js/lib/angular-route.min.js"></script>
+        <script src="js/lib/angular-resource.min.js"></script>
+
+        <!-- IMPORTANDO A APLICAÇÃO -->
+        <script src="js/main.js"></script>
+
+        <!-- IMPORTANDO AS CONFIGURACOES -->
+        <script src="js/config/routeConfig.js"></script>
+
+        <!-- IMPORTANTO OS CONTROLLERS -->
+        <script src="js/controllers/fotosController.js"></script>
+
+        <!-- IMPORTANTO OS SERVICES -->
+        <script src="js/services/fotosAPI.js"></script>
+
+        <!-- IMPORTANTO as DIRECTIVES -->
+        <script src="js/directives/panelDirective.js"></script>
+        <script src="js/directives/fotoDirective.js"></script>
+
+    </head>
+    <body>
+      <div class="container" ng-view>
+      </div>
+    </body>
+</html>
